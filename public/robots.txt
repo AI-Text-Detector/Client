@@ -1,3 +1,10 @@
-# https://www.robotstxt.org/robotstxt.html
+# AI Text Detector - Robots.txt
+# Allow all crawlers to access the site
 User-agent: *
-Disallow:
+Allow: /
+
+# Sitemap location (if you have one)
+# Sitemap: https://aitextdetector.com/sitemap.xml
+
+# Crawl delay (optional)
+# Crawl-delay: 1
