@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Button, notification, Spin, Space } from 'antd';
 import { SendOutlined, FileTextOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import { analyzeTextWithAI } from '../services/aiDetectionService';
 import ResultDisplay from './ResultDisplay';
 
 const TextInput = () => {
@@ -22,20 +22,25 @@ const TextInput = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/detect-text', { text });
-      setResult(response.data.result);
-      notification.success({ 
-        message: 'Analysis completed!',
-        description: 'Your text has been successfully analyzed.',
-        placement: 'topRight'
-      });
+      const response = await analyzeTextWithAI(text);
+      
+      if (response.success) {
+        setResult(response.result);
+        notification.success({ 
+          message: 'Analysis completed!',
+          description: 'Your text has been successfully analyzed using free AI detection algorithms.',
+          placement: 'topRight'
+        });
+      } else {
+        throw new Error(response.error);
+      }
     } catch (error) {
       console.error('Error:', error);
-      notification.error({ 
-        message: 'Analysis failed', 
-        description: error.response?.data?.error || 'Please try again later',
-        placement: 'topRight'
-      });
+              notification.error({ 
+          message: 'Analysis failed', 
+          description: error.message || 'Please try again later',
+          placement: 'topRight'
+        });
     } finally {
       setLoading(false);
     }
