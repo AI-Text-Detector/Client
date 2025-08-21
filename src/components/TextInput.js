@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Input, Button, notification, Spin, Space } from 'antd';
+import { Input, Button, notification, Spin, Space, Typography } from 'antd';
 import { SendOutlined, FileTextOutlined } from '@ant-design/icons';
 import { analyzeTextWithAI } from '../services/aiDetectionService';
 import ResultDisplay from './ResultDisplay';
+
+const { Text } = Typography;
 
 const TextInput = () => {
   const [text, setText] = useState('');
@@ -15,6 +17,16 @@ const TextInput = () => {
     if (!text.trim()) {
       notification.warning({ 
         message: 'Please enter some text to analyze',
+        placement: 'topRight'
+      });
+      return;
+    }
+
+    // Check minimum text length for accurate results
+    if (text.trim().length < 250) {
+      notification.warning({ 
+        message: 'Text too short for accurate analysis',
+        description: 'Please enter at least 250 characters for more reliable AI detection results.',
         placement: 'topRight'
       });
       return;
@@ -36,15 +48,18 @@ const TextInput = () => {
       }
     } catch (error) {
       console.error('Error:', error);
-              notification.error({ 
-          message: 'Analysis failed', 
-          description: error.message || 'Please try again later',
-          placement: 'topRight'
-        });
+      notification.error({ 
+        message: 'Analysis failed', 
+        description: error.message || 'Please try again later',
+        placement: 'topRight'
+      });
     } finally {
       setLoading(false);
     }
   };
+
+  const characterCount = text.length;
+  const isTextLongEnough = characterCount >= 250;
 
   return (
     <div style={{ padding: '20px 0' }}>
@@ -54,7 +69,7 @@ const TextInput = () => {
             rows={8}
             value={text}
             onChange={handleTextChange}
-            placeholder='Enter or paste text to analyze for AI detection...'
+            placeholder='Enter or paste text to analyze for AI detection... (Minimum 250 characters for accurate results)'
             style={{ 
               fontSize: '16px',
               borderRadius: '12px',
@@ -71,6 +86,22 @@ const TextInput = () => {
               e.target.style.boxShadow = 'none';
             }}
           />
+          <div style={{ 
+            marginTop: '8px', 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center' 
+          }}>
+            <Text 
+              type={isTextLongEnough ? "success" : "warning"}
+              style={{ fontSize: '14px' }}
+            >
+              {isTextLongEnough 
+                ? `✓ Text length: ${characterCount} characters (sufficient for analysis)`
+                : `⚠ Text length: ${characterCount}/250 characters (need ${250 - characterCount} more for accurate results)`
+              }
+            </Text>
+          </div>
         </div>
         
         <div style={{ textAlign: 'center' }}>
@@ -78,6 +109,7 @@ const TextInput = () => {
             type='primary' 
             onClick={handleDetectText} 
             loading={loading}
+            disabled={!isTextLongEnough}
             size="large"
             icon={loading ? null : <SendOutlined />}
             style={{ 
@@ -85,18 +117,27 @@ const TextInput = () => {
               padding: '0 32px',
               fontSize: '16px',
               borderRadius: '24px',
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: isTextLongEnough 
+                ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                : '#d9d9d9',
               border: 'none',
-              boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)',
-              transition: 'all 0.3s ease'
+              boxShadow: isTextLongEnough 
+                ? '0 4px 15px rgba(102, 126, 234, 0.3)'
+                : 'none',
+              transition: 'all 0.3s ease',
+              cursor: isTextLongEnough ? 'pointer' : 'not-allowed'
             }}
             onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.4)';
+              if (isTextLongEnough) {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.4)';
+              }
             }}
             onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.3)';
+              if (isTextLongEnough) {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.3)';
+              }
             }}
           >
             {loading ? 'Analyzing...' : 'Analyze Text'}

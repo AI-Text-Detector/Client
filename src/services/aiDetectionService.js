@@ -3,6 +3,14 @@
 
 export const analyzeTextWithAI = async (text) => {
   try {
+    // Check minimum text length for accurate analysis
+    if (text.trim().length < 250) {
+      return {
+        success: false,
+        error: 'Text is too short for accurate analysis. Please provide at least 250 characters for reliable AI detection results.'
+      };
+    }
+
     // Text preprocessing
     const cleanText = text.toLowerCase().trim();
     const words = cleanText.split(/\s+/);
