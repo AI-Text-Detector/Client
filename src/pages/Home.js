@@ -6,6 +6,7 @@ import Hero from '../components/Hero';
 import Features from '../components/Features';
 import Stats from '../components/Stats';
 import TextInput from '../components/TextInput';
+import FAQ from '../components/FeaturesHomepageFaq';
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -54,6 +55,7 @@ const Home = () => {
 
         <Stats />
         <Features />
+        <FAQ />
       </Content>
       
       <Footer />
