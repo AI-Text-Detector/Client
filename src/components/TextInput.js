@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Input, Button, notification, Spin, Space, Typography } from 'antd';
 import { SendOutlined, FileTextOutlined } from '@ant-design/icons';
 import { analyzeTextWithAI } from '../services/aiDetectionService';
+import { updateAnalytics, readAnalytics } from './ToolAnalytics';
 import ResultDisplay from './ResultDisplay';
 
 const { Text } = Typography;
@@ -34,10 +35,18 @@ const TextInput = () => {
 
     setLoading(true);
     try {
-      const response = await analyzeTextWithAI(text);
+      const MIN_LOADING_MS = 3000;
+      const responsePromise = analyzeTextWithAI(text);
+      const delayPromise = new Promise(resolve => setTimeout(resolve, MIN_LOADING_MS));
+      const [response] = await Promise.all([responsePromise, delayPromise]);
       
       if (response.success) {
         setResult(response.result);
+        // Analytics: increment counts
+        updateAnalytics({ 
+          totalAnalyses: 1, 
+          totalWordsAnalyzed: text.trim().split(/\s+/).length 
+        });
         notification.success({ 
           message: 'Analysis completed!',
           description: 'Your text has been successfully analyzed using free AI detection algorithms.',
@@ -60,6 +69,9 @@ const TextInput = () => {
 
   const characterCount = text.length;
   const isTextLongEnough = characterCount >= 250;
+  const totalWordsReviewed = (() => {
+    try { return readAnalytics().totalWordsAnalyzed || 0; } catch { return 0; }
+  })();
 
   return (
     <div style={{ padding: '20px 0' }}>
@@ -69,6 +81,7 @@ const TextInput = () => {
             rows={8}
             value={text}
             onChange={handleTextChange}
+            disabled={loading}
             placeholder='Enter or paste text to analyze for AI detection... (Minimum 250 characters for accurate results)'
             style={{ 
               fontSize: '16px',
@@ -144,6 +157,10 @@ const TextInput = () => {
           </Button>
         </div>
 
+        <div style={{ textAlign: 'center', color: '#888' }}>
+          <Text type="secondary">Total words reviewed so far: {totalWordsReviewed}</Text>
+        </div>
+
         {loading && (
           <div style={{ textAlign: 'center', margin: '40px 0' }}>
             <Spin size="large" />
@@ -153,7 +170,7 @@ const TextInput = () => {
           </div>
         )}
 
-        {result && <ResultDisplay result={result} />}
+        {result && <ResultDisplay result={result} originalText={text} />}
       </Space>
     </div>
   );

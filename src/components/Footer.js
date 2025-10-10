@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout, Typography, Space, Divider } from 'antd';
+import { Link as RouterLink } from 'react-router-dom';
 import { GithubOutlined, TwitterOutlined, LinkedinOutlined, MailOutlined } from '@ant-design/icons';
 
 const { Footer: AntFooter } = Layout;
@@ -36,7 +37,7 @@ const Footer = () => {
               </Text>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <Link href="#" style={{ color: '#8c8c8c' }}>How it Works</Link>
-                <Link href="#" style={{ color: '#8c8c8c' }}>API Documentation</Link>
+                <RouterLink to="/contact" style={{ color: '#8c8c8c' }}>Contact Us</RouterLink>
                 <Link href="#" style={{ color: '#8c8c8c' }}>Privacy Policy</Link>
                 <Link href="#" style={{ color: '#8c8c8c' }}>Terms of Service</Link>
               </div>

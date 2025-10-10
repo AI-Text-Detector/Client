@@ -16,33 +16,33 @@ const FAQ = () => {
   const faqs = [
     {
       icon: <ThunderboltOutlined style={{ fontSize: '20px', color: '#faad14' }} />,
-      question: 'How fast is the analysis?',
-      answer: 'Our optimized AI algorithms deliver instant results in just seconds.'
+      question: 'How fast is the AI text analysis?',
+      answer: 'Our optimized AI algorithms deliver instant results in just seconds. Simply paste your text and get immediate AI detection results with detailed analysis.'
     },
     {
       icon: <SafetyOutlined style={{ fontSize: '20px', color: '#52c41a' }} />,
-      question: 'How accurate is the AI detector?',
-      answer: 'We achieve up to 99% accuracy using advanced machine learning models.'
+      question: 'How accurate is the AI text detector?',
+      answer: 'We achieve 99% accuracy using advanced machine learning models trained on millions of text samples. Our AI detector can distinguish between human and AI-generated content with high confidence.'
     },
     {
       icon: <RobotOutlined style={{ fontSize: '20px', color: '#1890ff' }} />,
-      question: 'What powers your AI detector?',
-      answer: 'It is built with state-of-the-art AI that continuously learns and improves.'
+      question: 'What technology powers your AI detector?',
+      answer: 'Our AI text detector is built with state-of-the-art machine learning algorithms that analyze linguistic patterns, writing style, and text complexity to identify AI-generated content.'
     },
     {
       icon: <BarChartOutlined style={{ fontSize: '20px', color: '#722ed1' }} />,
-      question: 'Do you provide detailed insights?',
-      answer: 'Yes, every analysis includes confidence scores and detailed explanations.'
+      question: 'What insights does the AI detector provide?',
+      answer: 'Every analysis includes confidence scores, detailed explanations, and breakdowns of detected patterns. You get comprehensive insights into why content was flagged as AI-generated.'
     },
     {
       icon: <LockOutlined style={{ fontSize: '20px', color: '#eb2f96' }} />,
-      question: 'Is my data secure?',
-      answer: 'Absolutely. Your text is processed securely and never stored. Privacy first.'
+      question: 'Is my text data secure and private?',
+      answer: 'Absolutely. Your text is processed securely and never stored on our servers. We prioritize privacy and security - your content is analyzed and immediately discarded.'
     },
     {
       icon: <GlobalOutlined style={{ fontSize: '20px', color: '#13c2c2' }} />,
-      question: 'Does it support multiple languages?',
-      answer: 'Yes, we support multiple languages with accurate detection across writing styles.'
+      question: 'Does the AI detector support multiple languages?',
+      answer: 'Yes, our AI text detector supports multiple languages including English, Spanish, French, German, and more, with accurate detection across different writing styles and languages.'
     }
   ];
 
@@ -60,7 +60,7 @@ const FAQ = () => {
             WebkitTextFillColor: 'transparent',
             fontSize: '2.5rem'
           }}>
-            Frequently Asked Questions
+            AI Text Detector FAQ - Common Questions Answered
           </Title>
         </div>
 

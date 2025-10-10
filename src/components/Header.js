@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout, Typography, Space, Button } from 'antd';
-import { RobotOutlined, GithubOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import { RobotOutlined } from '@ant-design/icons';
 
 const { Header: AntHeader } = Layout;
 const { Title } = Typography;
@@ -33,25 +34,17 @@ const Header = () => {
             fontWeight: 'bold'
           }}
         >
-          AI Text Detector
+          <Link to="/" style={{ color: '#fff' }}>AI Text Detector</Link>
         </Title>
       </Space>
       
       <Space size="large">
-        <Button 
-          type="text" 
-          icon={<QuestionCircleOutlined />}
-          style={{ color: '#fff' }}
-        >
-          How it Works
-        </Button>
-        <Button 
-          type="text" 
-          icon={<GithubOutlined />}
-          style={{ color: '#fff' }}
-        >
-          GitHub
-        </Button>
+        <Link to="/ai-detector-for-teachers-students-free">
+          <Button type="text" style={{ color: '#fff' }}>For Teachers & Students</Button>
+        </Link>
+        <Link to="/contact">
+          <Button type="text" style={{ color: '#fff' }}>Contact Us</Button>
+        </Link>
       </Space>
     </AntHeader>
   );
