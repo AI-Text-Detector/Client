@@ -59,7 +59,7 @@ const Features = () => {
             WebkitTextFillColor: 'transparent',
             fontSize: '2.5rem'
           }}>
-            Why Choose Our AI Detector?
+            Why Choose Our AI Text Detection Tool?
           </Title>
           <Paragraph style={{ 
             fontSize: '18px', 
@@ -67,7 +67,8 @@ const Features = () => {
             maxWidth: '600px',
             margin: '0 auto'
           }}>
-            Our advanced technology provides the most reliable and accurate AI text detection available
+            Our cutting-edge AI technology provides the most reliable and accurate AI text detection available, 
+            helping you verify content authenticity with confidence.
           </Paragraph>
         </div>
 

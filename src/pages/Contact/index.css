@@ -1,0 +1,40 @@
+.contact-layout {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.contact-content {
+  padding: 40px 20px;
+}
+
+.contact-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.contact-stack {
+  width: 100%;
+}
+
+.contact-heading {
+  text-align: center;
+}
+
+.contact-title {
+  margin-bottom: 8px !important;
+}
+
+.contact-subtitle {
+  margin-bottom: 0 !important;
+}
+
+.contact-card {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.contact-footer-text {
+  text-align: center;
+}
+
+
+
