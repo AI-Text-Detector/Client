@@ -6,11 +6,7 @@ import { RobotOutlined, UserOutlined, TrophyOutlined } from '@ant-design/icons';
 const { Text, Title } = Typography;
 
 const ResultDisplay = ({ result, originalText }) => {
-  if (!result) return null;
-
-  const confidence = result.confidence || 0;
-  const isAI = result.isAI;
-  
+  // Define helper functions first (before hooks)
   const getConfidenceColor = (confidence) => {
     if (confidence >= 80) return '#52c41a';
     if (confidence >= 60) return '#faad14';
@@ -57,6 +53,7 @@ const ResultDisplay = ({ result, originalText }) => {
     return sentences;
   };
 
+  // All hooks must be called before any conditional returns
   const sentences = splitIntoSentencesWithDelims(originalText || '');
 
   // Build suspect sentence indices for editing
@@ -76,7 +73,7 @@ const ResultDisplay = ({ result, originalText }) => {
     if (suspectCount > 0) {
       updateAnalytics({ totalSuspectSentences: suspectCount });
     }
-  }, [originalText]);
+  }, [originalText, suspectIndices.length]);
 
   const handleEditChange = (index, value) => {
     setEditedByIndex(prev => ({ ...prev, [index]: value }));
@@ -198,6 +195,12 @@ const ResultDisplay = ({ result, originalText }) => {
       .map((s, i) => (editedByIndex[i] !== undefined ? editedByIndex[i] : s))
       .join('');
   }, [sentences, editedByIndex]);
+
+  // Early return after all hooks have been called
+  if (!result) return null;
+
+  const confidence = result.confidence || 0;
+  const isAI = result.isAI;
 
   return (
     <Card 
